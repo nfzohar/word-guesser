@@ -1,0 +1,48 @@
+/* WORDLE MAIN TAGS */
+
+html {
+    font-family: calibri;
+}
+
+body {
+    text-align: center;
+    font-size: 130%;
+    width: 99%;
+}
+
+main {
+    margin-top: 4%;
+    margin-bottom: 4%;
+}
+
+
+/* WORDLE CLONE IDs */
+
+#wordle_logo {
+    font-size: 370%;
+    color: rgb(0, 103, 0);
+}
+
+#wordle_guess_try {
+    font-size: 80%;
+    background-color: rgb(0, 103, 0);
+    color: rgb(255, 255, 255);
+    border-radius: 10%;
+    margin: 1%;
+}
+
+#word_guess_end {
+    display: none;
+}
+
+
+/* WORDLE CLONE CLASSes */
+
+.wordle_guess_word {
+    width: 4%;
+    font-size: 250%;
+    margin-bottom: 1%;
+    border-radius: 10%;
+    text-align: center;
+    border: 4px solid rgb(106, 106, 106);
+}
