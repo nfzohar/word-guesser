@@ -7,76 +7,45 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="wordle_functions.js"></script>
 </head>
 
 <body>
     <header>
         <b id="wordle_logo">"WORDLE"</b>
+        <br>
+        <b id="main_text_output">GUESS THE WORD IN 6 TRIES OR LESS</b>
         <hr>
     </header>
 
-    <main>
-        <div id="word_guess_1">
+    <main onload="checkTheWord()">
 
-            <input class="wordle_guess_word" id="guess_word_letter_1" type="text" maxlength="1" autofocus>
-            <input class="wordle_guess_word" id="guess_word_letter_2" type="text" maxlength="1">
-            <input class="wordle_guess_word" id="guess_word_letter_3" type="text" maxlength="1">
-            <input class="wordle_guess_word" id="guess_word_letter_4" type="text" maxlength="1">
-            <input class="wordle_guess_word" id="guess_word_letter_5" type="text" maxlength="1">
+        <div id="word_guess_input">
+            <input class="wordle_guess_word" id="field_1" type="text" maxlength="1" autofocus>
+            <input class="wordle_guess_word" id="field_2" type="text" maxlength="1">
+            <input class="wordle_guess_word" id="field_3" type="text" maxlength="1">
+            <input class="wordle_guess_word" id="field_4" type="text" maxlength="1">
+            <input class="wordle_guess_word" id="field_5" type="text" maxlength="1">
         </div>
+        <button id="wordle_guess_try" onclick="checkTheWord()">></button>
 
-        <div id="word_guess_2">
-
-            <input class="wordle_guess_word" id="guess_word_letter_1" type="text" maxlength="1" autofocus>
-            <input class="wordle_guess_word" id="guess_word_letter_2" type="text" maxlength="1">
-            <input class="wordle_guess_word" id="guess_word_letter_3" type="text" maxlength="1">
-            <input class="wordle_guess_word" id="guess_word_letter_4" type="text" maxlength="1">
-            <input class="wordle_guess_word" id="guess_word_letter_5" type="text" maxlength="1">
-        </div>
-
-        <div id="word_guess_3">
-
-            <input class="wordle_guess_word" id="guess_word_letter_1" type="text" maxlength="1" autofocus>
-            <input class="wordle_guess_word" id="guess_word_letter_2" type="text" maxlength="1">
-            <input class="wordle_guess_word" id="guess_word_letter_3" type="text" maxlength="1">
-            <input class="wordle_guess_word" id="guess_word_letter_4" type="text" maxlength="1">
-            <input class="wordle_guess_word" id="guess_word_letter_5" type="text" maxlength="1">
-        </div>
-
-        <div id="word_guess_4">
-
-            <input class="wordle_guess_word" id="guess_word_letter_1" type="text" maxlength="1" autofocus>
-            <input class="wordle_guess_word" id="guess_word_letter_2" type="text" maxlength="1">
-            <input class="wordle_guess_word" id="guess_word_letter_3" type="text" maxlength="1">
-            <input class="wordle_guess_word" id="guess_word_letter_4" type="text" maxlength="1">
-            <input class="wordle_guess_word" id="guess_word_letter_5" type="text" maxlength="1">
-        </div>
-
-        <div id="word_guess_5">
-
-            <input class="wordle_guess_word" id="guess_word_letter_1" type="text" maxlength="1" autofocus>
-            <input class="wordle_guess_word" id="guess_word_letter_2" type="text" maxlength="1">
-            <input class="wordle_guess_word" id="guess_word_letter_3" type="text" maxlength="1">
-            <input class="wordle_guess_word" id="guess_word_letter_4" type="text" maxlength="1">
-            <input class="wordle_guess_word" id="guess_word_letter_5" type="text" maxlength="1">
-        </div>
-
-        <div id="word_guess_6">
-
-            <input class="wordle_guess_word" id="guess_word_letter_1" type="text" maxlength="1" autofocus>
-            <input class="wordle_guess_word" id="guess_word_letter_2" type="text" maxlength="1">
-            <input class="wordle_guess_word" id="guess_word_letter_3" type="text" maxlength="1">
-            <input class="wordle_guess_word" id="guess_word_letter_4" type="text" maxlength="1">
-            <input class="wordle_guess_word" id="guess_word_letter_5" type="text" maxlength="1">
-        </div>
-
-        <div id="word_guess_end">
-            <b>THE WORD WAS: </b>
-            <br>
-            <button id="wordle_guess_try">NEXT WORD</button>
-        </div>
+        <div id="word_results"></div>
     </main>
 
+    <footer>
+        <hr>
+        <b onclick="displayRules()">RULES</b>
+        <div id="rules_section">
+            <p>Guess the word in 6 tries or less.
+                <br>Wrong guesses give clues about the correct word.
+                <br>Letters that are in the right slot, will turn green.
+                <br>Letters that are in the wrong slot, but are in the word, will turn yellow.
+                <br>Other letters will turn dark grey.
+            </p>
+        </div>
+
+        <button id="wordle_guess_next" style="display: none;">PLAY AGAIN</button>
+    </footer>
 </body>
 
 </html>
