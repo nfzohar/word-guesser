@@ -1,4 +1,2 @@
-# wordle-clone
-A basic clone of wordle
-
-A word guessing game.
+# wordle-like game
+A basic word guessing game.
