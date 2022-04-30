@@ -1,2 +1,2 @@
 # wordle-like game
-A basic word guessing game.
+A basic JS-based word guessing game.
