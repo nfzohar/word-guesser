@@ -1,5 +1,5 @@
-var try_number = 0;
-var selected_word = 'TESTS';
+var try_number = 1;
+var selected_word = chooseRandomWord();
 
 // Main function.
 function checkTheWord() {
@@ -17,80 +17,67 @@ function checkTheWord() {
 
 // Check if the word matches the selected word.
 function checkGuessWord() {
-    if (try_number < 6) {
-        let innerContent = '<div>' +
-            //'<input class="word_guess_word_past" type="text" disabled="true">' +
-            //'<input class="word_guess_word_past" type="text" disabled="true">' +
-            //'<input class="word_guess_word_past" type="text" disabled="true">' +
-            //'<input class="word_guess_word_past" type="text" disabled="true">' +
-            //'<input class="word_guess_word_past" type="text" disabled="true">' +
-            getLettersFromTry(1) +
-            getLettersFromTry(2) +
-            getLettersFromTry(3) +
-            getLettersFromTry(4) +
-            getLettersFromTry(5) +
-            '</div>';
+    if (try_number <= 6) {
 
-        document.getElementById('word_results').innerHTML += innerContent;
-        try_number++;
+        if (fullGuessWord() === selected_word.toUpperCase()) {
+            document.getElementById('guess_game_over').style.display = 'block';
+            document.getElementById('guess_game_over_label').innerText = 'CONGRATULATIONS, YOU WIN';
+            document.getElementById('guess_game_the_word_was').innerText = 'THE WORD WAS: ' + selected_word;
+        } else {
+            if (try_number < 6) {
+                let innerContent = '<div>' +
+                    checkLetter('field_1', 0) +
+                    checkLetter('field_2', 1) +
+                    checkLetter('field_3', 2) +
+                    checkLetter('field_4', 3) +
+                    checkLetter('field_5', 4) +
+                    '</div>';
+
+                clearTheLetterSlots();
+                document.getElementById('word_results').innerHTML += innerContent;
+                try_number++;
+            } else { showError('no_cheating'); }
+        }
     } else {
-        alert('SORRY,\nYOU LOST THE GAME.\nTHE WORD WAS ' + selected_word);
+        document.getElementById('guess_game_over').style.display = 'block';
+        document.getElementById('guess_game_over_label').innerText = 'SORRY, YOU LOSE';
+        document.getElementById('guess_game_the_word_was').innerText = 'THE WORD WAS: ' + selected_word;
+        s
     }
 }
 
-// test method - WIO
-function getLettersFromTry(nmbr) {
-    let output;
-    let l;
+// Check if the letter is in the word.
+function checkLetter(fieldId, letterPlace) {
+    let letter = document.getElementById(fieldId).value.toUpperCase();
+    let wordToArray = [];
+    let element = '<input class="word_guess_word_past ';
 
-    switch (nmbr) {
-        case 1:
-            {
-                l = document.getElementById('field_1').value;
-                document.getElementById('field_1').value = '';
-                break;
-            }
-
-        case 2:
-            {
-                l = document.getElementById('field_2').value;
-                document.getElementById('field_2').value = '';
-                break;
-            }
-
-        case 3:
-            {
-                l = document.getElementById('field_3').value;
-                document.getElementById('field_3').value = '';
-                break;
-            }
-
-        case 4:
-            {
-                l = document.getElementById('field_4').value;
-                document.getElementById('field_4').value = '';
-                break;
-            }
-
-        case 5:
-            {
-                l = document.getElementById('field_5').value;
-                document.getElementById('field_5').value = '';
-                break;
-            }
-
-        default:
-            break;
+    for (let i = 0; i < selected_word.length; i++) {
+        wordToArray[i] = selected_word.charAt(i).toUpperCase();
     }
 
-    output = '<input class="word_guess_word_past" type="text" disabled="true" value="' + l + '">';
-    document.getElementById('field_1').focus();
-    return output;
+    if (wordToArray[letterPlace] === letter) {
+        element += 'correct_letter_right_slot"';
+    } else if (wordToArray.includes(letter)) {
+        element += 'correct_letter_wrong_slot"';
+    } else {
+        element += 'wrong_letter"';
+    }
+    element += ' type="text" disabled="true" value="' + letter + '">';
+
+    return element;
+}
+
+// Select the word to guess.
+function chooseRandomWord() {
+    // showError('word_not_on_list');
+    let word = "tests";
+    return word.toUpperCase();
 }
 
 // Display the rules.
 function displayRules() {
-    if (document.getElementById('rules_section').style.display === 'none') {
+    if (document.getElementById('rules_section').style.display == 'none') {
         document.getElementById('rules_section').style.display = 'block';
     } else {
         document.getElementById('rules_section').style.display = 'none';
@@ -99,27 +86,40 @@ function displayRules() {
 
 // Blank fields check.
 function noBlankFields() {
-    if (document.getElementById("field_1").value != '' &&
-        document.getElementById("field_2").value != '' &&
-        document.getElementById("field_3").value != '' &&
-        document.getElementById("field_4").value != '' &&
-        document.getElementById("field_5").value != '') {
-        return true;
-    } else { return false; }
+    let resultBool = false;
+
+    if (document.getElementById('field_1').value != '' &&
+        document.getElementById('field_2').value != '' &&
+        document.getElementById('field_3').value != '' &&
+        document.getElementById('field_4').value != '' &&
+        document.getElementById('field_5').value != '') {
+        resultBool = true;
+    }
+
+    if (document.getElementById("field_1").value === ' ' ||
+        document.getElementById("field_2").value === ' ' ||
+        document.getElementById("field_3").value === ' ' ||
+        document.getElementById("field_4").value === ' ' ||
+        document.getElementById("field_5").value === ' ') {
+        resultBool = false;
+    }
+
+    return resultBool;
 }
 
 // Numbers in fields check.
 function noNumbersInFields() {
-    let resultBool;
+    let resultBool = true;
+    let numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
-    for (let i = 0; i <= 9; i++) {
-        if (document.getElementById('field_1').value != i &&
-            document.getElementById('field_2').value != i &&
-            document.getElementById('field_3').value != i &&
-            document.getElementById('field_4').value != i &&
-            document.getElementById('field_5').value != i) {
-            resultBool = true;
-        } else { resultBool = false; }
+    for (let i = 0; i < 10; i++) {
+        if (numbers.includes(document.getElementById('field_1').value) ||
+            numbers.includes(document.getElementById('field_2').value) ||
+            numbers.includes(document.getElementById('field_3').value) ||
+            numbers.includes(document.getElementById('field_4').value) ||
+            numbers.includes(document.getElementById('field_5').value)) {
+            resultBool = false;
+        }
     }
 
     return resultBool;
@@ -130,13 +130,13 @@ function showError(errorType) {
     let error_message;
 
     if (errorType === 'empty_slots') {
-        error_message = 'FILL IN ALL SLOTS!';
-    }
-    if (errorType === 'numbers') {
+        error_message = "FILL IN ALL SLOTS, DON'T USE SPACES! ";
+    } else if (errorType === 'numbers') {
         error_message = "DON'T USE NUMBERS!";
-    }
-    if (errorType === 'word_not_in_list') {
+    } else if (errorType === 'word_not_on_list') {
         error_message = "WORD IS NOT ON THE LIST!";
+    } else if (errorType === 'no_cheating') {
+        error_message = "THIS GAME IS DONE, TRY AGAIN!";
     }
 
     document.getElementById('main_text_output').innerHTML = '<b style="color: red;">' + error_message + '</b>';
@@ -154,4 +154,46 @@ function runTryOnEnter() {
             document.getElementById("word_guess_try").click();
         }
     });
+}
+
+// Switch to the next input field on letter key press.
+function nextInput(targetId) {
+    let letterField = document.getElementById("word_guess_input");
+    let lettersArrayLowerCase = ['q', 'w', 'e', 'r', 't', 'z', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'y', 'x', 'c', 'v', 'b', 'n', 'm']
+    let lettersArrayCapitalCase = ['Q', 'W', 'E', 'R', 'T', 'Z', 'U', 'I', 'O', 'P', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'Y', 'X', 'C', 'V', 'B', 'N', 'M']
+
+    letterField.addEventListener("keyup", function(event) {
+        if (lettersArrayLowerCase.includes(event.key) || lettersArrayCapitalCase.includes(event.key)) {
+            document.getElementById(targetId).focus();
+        }
+    });
+}
+
+// Start a new game.
+function startNewGame() {
+    try_number = 1;
+    selected_word = chooseRandomWord();
+    location.reload();
+}
+
+// Clear the letter slots.
+function clearTheLetterSlots() {
+    document.getElementById("field_1").value = '';
+    document.getElementById("field_2").value = '';
+    document.getElementById("field_3").value = '';
+    document.getElementById("field_4").value = '';
+    document.getElementById("field_5").value = '';
+
+    document.getElementById("field_1").focus();
+}
+
+// Put the word together.
+function fullGuessWord() {
+    let fullWord = document.getElementById("field_1").value +
+        document.getElementById("field_2").value +
+        document.getElementById("field_3").value +
+        document.getElementById("field_4").value +
+        document.getElementById("field_5").value;
+
+    return fullWord.toUpperCase();
 }

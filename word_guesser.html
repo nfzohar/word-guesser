@@ -12,19 +12,25 @@
 
 <body onload="runTryOnEnter()">
     <header>
-        <b id="word_logo" onclick="location.reload()">WORD-GUESSER</b>
+        <b id="word_logo" onclick="location.reload()">WORD GUESSER</b>
         <br>
         <b id="main_text_output">GUESS THE WORD IN 6 TRIES OR LESS</b>
         <hr>
+        <div id="guess_game_over">
+            <b id="guess_game_over_label"></b>
+            <b id="guess_game_the_word_was"></b>
+            <button id="word_guess_rules" onclick="startNewGame()">NEW GAME</button>
+            <hr>
+        </div>
     </header>
 
-    <main>
+    <main onload="startNewGame()">
         <div id="word_guess_input">
-            <input class="word_guess_word" id="field_1" type="text" maxlength="1" autofocus>
-            <input class="word_guess_word" id="field_2" type="text" maxlength="1">
-            <input class="word_guess_word" id="field_3" type="text" maxlength="1">
-            <input class="word_guess_word" id="field_4" type="text" maxlength="1">
-            <input class="word_guess_word" id="field_5" type="text" maxlength="1">
+            <input class="word_guess_word" id="field_1" type="text" maxlength="1" onkeyup="nextInput('field_2')" autofocus>
+            <input class="word_guess_word" id="field_2" type="text" maxlength="1" onkeyup="nextInput('field_3')">
+            <input class="word_guess_word" id="field_3" type="text" maxlength="1" onkeyup="nextInput('field_4')">
+            <input class="word_guess_word" id="field_4" type="text" maxlength="1" onkeyup="nextInput('field_5')">
+            <input class="word_guess_word" id="field_5" type="text" maxlength="1" onkeyup="nextInput('field_1')">
         </div>
         <button id="word_guess_try" onclick="checkTheWord()">></button>
         <div id="word_results"></div>
@@ -41,8 +47,6 @@
                 <br>Letters that are not present in the word, will turn grey.
             </p>
         </div>
-
-        <button id="" style="display: none;">PLAY AGAIN</button>
     </footer>
 </body>
 
