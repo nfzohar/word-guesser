@@ -1,12 +1,17 @@
-var try_number = 1;
+var word_list = [];
+var try_number = 0;
 var selected_word = chooseRandomWord();
 
 // Main function.
 function checkTheWord() {
-
     if (noBlankFields()) {
         if (noNumbersInFields()) {
-            checkGuessWord();
+            let fullWord = '' + fullGuessWord();
+            if (word_list.includes(fullWord.toLowerCase())) {
+                checkGuessWord();
+            } else {
+                showError('word_not_on_list');
+            }
         } else {
             showError('numbers');
         }
@@ -15,9 +20,33 @@ function checkTheWord() {
     }
 }
 
+// Switch to the next input field on letter key press.
+function nextInput(targetId) {
+    let letterField = document.getElementById("word_guess_input");
+    let lettersArrayLowerCase = ['q', 'w', 'e', 'r', 't', 'z', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'y', 'x', 'c', 'v', 'b', 'n', 'm']
+    let lettersArrayCapitalCase = ['Q', 'W', 'E', 'R', 'T', 'Z', 'U', 'I', 'O', 'P', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'Y', 'X', 'C', 'V', 'B', 'N', 'M']
+
+    letterField.addEventListener("keyup", function(event) {
+        if (lettersArrayLowerCase.includes(event.key) || lettersArrayCapitalCase.includes(event.key)) {
+            document.getElementById(targetId).focus();
+        }
+    });
+}
+
+// Shortcut the try (>) button to Enter key. 
+function runTryOnEnter() {
+    let letterField = document.getElementById("word_guess_input");
+
+    letterField.addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            document.getElementById("word_guess_try").click();
+        }
+    });
+}
+
 // Check if the word matches the selected word.
 function checkGuessWord() {
-    if (try_number <= 6) {
+    if (try_number < 6) {
 
         if (fullGuessWord() === selected_word.toUpperCase()) {
             document.getElementById('guess_game_over').style.display = 'block';
@@ -42,7 +71,6 @@ function checkGuessWord() {
         document.getElementById('guess_game_over').style.display = 'block';
         document.getElementById('guess_game_over_label').innerText = 'SORRY, YOU LOSE';
         document.getElementById('guess_game_the_word_was').innerText = 'THE WORD WAS: ' + selected_word;
-        s
     }
 }
 
@@ -70,9 +98,18 @@ function checkLetter(fieldId, letterPlace) {
 
 // Select the word to guess.
 function chooseRandomWord() {
-    // showError('word_not_on_list');
-    let word = "tests";
+    word_list = load_word_list();
+    let word_list_length = word_list.length - 1;
+    let word = word_list[getRandomIntInclusive(0, word_list_length)];
+
     return word.toUpperCase();
+}
+
+// Get a random number between given min and max values.
+function getRandomIntInclusive(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
 // Display the rules.
@@ -143,30 +180,6 @@ function showError(errorType) {
     setTimeout(function() {
         document.getElementById('main_text_output').innerText = 'GUESS THE WORD IN 6 TRIES OR LESS';
     }, 1000);
-}
-
-// Shortcut the try (>) button to Enter key. 
-function runTryOnEnter() {
-    let letterField = document.getElementById("word_guess_input");
-
-    letterField.addEventListener("keypress", function(event) {
-        if (event.key === "Enter") {
-            document.getElementById("word_guess_try").click();
-        }
-    });
-}
-
-// Switch to the next input field on letter key press.
-function nextInput(targetId) {
-    let letterField = document.getElementById("word_guess_input");
-    let lettersArrayLowerCase = ['q', 'w', 'e', 'r', 't', 'z', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'y', 'x', 'c', 'v', 'b', 'n', 'm']
-    let lettersArrayCapitalCase = ['Q', 'W', 'E', 'R', 'T', 'Z', 'U', 'I', 'O', 'P', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'Y', 'X', 'C', 'V', 'B', 'N', 'M']
-
-    letterField.addEventListener("keyup", function(event) {
-        if (lettersArrayLowerCase.includes(event.key) || lettersArrayCapitalCase.includes(event.key)) {
-            document.getElementById(targetId).focus();
-        }
-    });
 }
 
 // Start a new game.

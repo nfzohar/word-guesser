@@ -6,8 +6,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="style.css">
-    <script type="text/javascript" src="word_guesser_functions.js"></script>
+    <link rel="stylesheet" href="./style.css">
+    <script type="text/javascript" src="./word_list.js"></script>
+    <script type="text/javascript" src="./word_guesser_functions.js"></script>
 </head>
 
 <body onload="runTryOnEnter()">
@@ -39,7 +40,7 @@
     <footer>
         <hr>
         <button id="word_guess_rules" onclick="displayRules()">RULES</button>
-        <div id="rules_section">
+        <div id="rules_section" style="display: none;">
             <p>Guess the word in 6 tries or less.
                 <br>Wrong guesses give clues about the correct word.
                 <br>Letters that are in the right place, will turn green.
