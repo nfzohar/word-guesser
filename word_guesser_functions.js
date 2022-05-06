@@ -178,7 +178,7 @@ function showError(errorType) {
 
     document.getElementById('main_text_output').innerHTML = '<b style="color: red;">' + error_message + '</b>';
     setTimeout(function() {
-        document.getElementById('main_text_output').innerText = 'GUESS THE WORD IN 6 TRIES OR LESS';
+        document.getElementById('main_text_output').innerText = 'GUESS THE WORD IN 7 TRIES OR LESS';
     }, 1000);
 }
 
