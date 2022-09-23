@@ -70,7 +70,7 @@ function checkGuessWord() {
     } else {
         document.getElementById('guess_game_over').style.display = 'block';
         document.getElementById('guess_game_over_label').innerText = 'SORRY, YOU LOSE';
-        document.getElementById('guess_game_the_word_was').innerText = 'THE WORD WAS: ' + selected_word;
+        document.getElementById('guess_game_the_word_was').innerHTML = '<span >THE WORD WAS: <b class="text-red-500">' + selected_word + '</b></span>';
     }
 }
 
@@ -78,18 +78,18 @@ function checkGuessWord() {
 function checkLetter(fieldId, letterPlace) {
     let letter = document.getElementById(fieldId).value.toUpperCase();
     let wordToArray = [];
-    let element = '<input class="word_guess_word_past ';
+    let element = '<input class="inline my-4 mx-2 w-20 h-20 sm:w-24 sm:h-24 md:w-30 md:h-30 xl:w-32 xl:h-32 text-7xl uppercase text-center rounded-xl border-4 font-semibold ';
 
     for (let i = 0; i < selected_word.length; i++) {
         wordToArray[i] = selected_word.charAt(i).toUpperCase();
     }
 
     if (wordToArray[letterPlace] === letter) {
-        element += 'correct_letter_right_slot"';
+        element += 'border-green-300 bg-green-600 text-white"';
     } else if (wordToArray.includes(letter)) {
-        element += 'correct_letter_wrong_slot"';
+        element += 'border-yellow-300 bg-yellow-500 text-white"';
     } else {
-        element += 'wrong_letter"';
+        element += 'border-gray-300 bg-gray-500 text-white"';
     }
     element += ' type="text" disabled="true" value="' + letter + '">';
 
